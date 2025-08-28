@@ -1,0 +1,106 @@
+# Full list of supported rules https://docs.astral.sh/ruff/rules
+lint.select = [
+    # "AIR", # Airflow
+    # "ERA", # eradicate
+    "FAST", # fastapi
+    # "YTT", # flake8-2020
+    "ANN", # flake8-annotations
+    "ASYNC", # flake8-async
+    # "S",   # flake8-bandit
+    # "BLE", # flake8-blind-except
+    # "FBT", # flake8-boolean-trap
+    # "B",   # flake8-bugbear
+    # "A",   # flake8-builtins
+    # "COM", # flake8-commas
+    "C4",  # flake8-comprehensions
+    # "CPY",   # flake8-copyright
+    # "DTZ", # flake8-datetimez
+    # "T10", # flake8-debugger
+    # "DJ",  # flake8-django
+    # "EM",  # flake8-errmsg
+    # "EXE", # flake8-executable
+    # "FIX", # flake8-fixme
+    # "FA",  # flake8-future-annotations
+    # "INT", # flake8-gettext
+    "ISC", # flake8-implicit-str-concat
+    # "ICN", # flake8-import-conventions
+    "LOG", # flake8-logging
+    # "G",   # flake8-logging-format
+    # "INP", # flake8-no-pep420
+    "PIE", # flake8-pie
+    # "T20", # flake8-print
+    # "PYI", # flake8-pyi
+    # "PT",  # flake8-pytest-style
+    # "Q",   # flake8-quotes
+    # "RSE", # flake8-raise
+    "RET", # flake8-return
+    # "SLF", # flake8-self
+    "SIM", # flake8-simplify
+    # "SLOT", # flake8-slots
+    # "TID", # flake8-tidy-imports
+    # "TD",  # flake8-todo
+    # "TC", # flake8-type-checking
+    # "ARG", # flake8-unused-arguments
+    # "PTH", # flake8-use-pathlib
+    # "FLY", # flynt
+    "I",   # isort
+    # "C90", # mccabe
+    # "NPY", # numpy-specific rules
+    # "PD",  # pandas-vet
+    # "N",   # pep8-naming
+    # "PERF", # Perflint
+    # "E",   # pycodestyle
+    "W",   # pycodestyle
+    # "D",   # pydocstyle
+    "F",   # PyFlakes
+    # "PGH", # pygrep-hooks
+    # "PLC", # PyLint Convention
+    # "PLE", # PyLint Error
+    "PLR", # PyLint Refactor
+    # "PLW", # PyLint Warning
+    "UP",  # pyupgrade
+    "FURB", # refurb
+    "RUF" # Ruff-specific rules
+    # "TRY", # tryceratops
+]
+
+lint.ignore = [
+    "SIM105", # suppressible-exception
+    "ANN002", # missing-type-args
+    "ANN003", # missing-type-kwargs
+    "ANN204", # missing-return-type-special-method
+    "ANN401", # any-type
+    "PLR0912", # Too many branches
+    "PLR0913", # Too many arguments to function call
+    "PLR0911", # Too many return statements
+    "PLR2004", # Magic value used in comparison
+    "PLR0915", # Too many statements
+    "PLR5501", # Use `elif` instead of `else` then `if`
+    "RUF001", # String contains ambiguous characters
+    "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
+    "RUF010", # Use explicit conversion flag
+    "ISC001",
+]
+exclude = [
+    "**/alembic",
+    "*.pyi",
+]
+force-exclude = true
+target-version = "py313" # python 3.13
+line-length = 100
+
+[lint.per-file-ignores]
+    "__init__.py" = ["F401"]
+    "**/test/*" = ["ANN"]
+
+[lint.flake8-annotations]
+    suppress-none-returning = true
+    suppress-dummy-args = true
+
+
+[lint.isort]
+known-first-party = ["bank"]
+combine-as-imports = true
+
+[lint.pyupgrade]
+keep-runtime-typing = false

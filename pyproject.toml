@@ -1,0 +1,25 @@
+[project]
+name = "calendarr"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.116.1",
+    "h2>=4.3.0",
+    "httpx>=0.28.1",
+    "icalendar>=6.3.1",
+]
+
+[tool.basedpyright]
+reportAny = false
+reportImplicitOverride = false
+reportMissingSuperCall = false
+reportMissingTypeStubs = false
+reportUnknownArgumentType = false
+reportUnknownLambdaType = false
+reportUnknownMemberType = false
+reportUnknownVariableType = false
+reportUnusedCallResult = false
+reportUnannotatedClassAttribute = false
+reportExplicitAny = false
