@@ -91,12 +91,10 @@ class MovieRelease(BaseModel):
         event.add("summary", title)
         event.add("dtstart", vDate(self.releaseDate))
         event.add("dtend", vDate(self.releaseDate + timedelta(days=1)))
-        if self.imdb:
-            event.add("url", self.imdb)
 
         description = self.overview or ""
-        if self.posterUrl:
-            description += f"\n {self.posterUrl}"
+        if self.imdb:
+            description += f"\n{self.imdb}"
         event.add("description", description)
 
         event.add("uid", f"{self.imdb or self.title}-{self.releaseDate.isoformat()}")
@@ -125,15 +123,13 @@ class SeriesRelease(BaseModel):
         event.add("summary", title)
         event.add("dtstart", vDate(self.airdate_utc))
         event.add("dtend", vDate(self.airdate_utc + timedelta(days=1)))
-        if self.imdb:
-            event.add("url", self.imdb)
 
         description = self.overview or ""
-        if self.posterUrl:
-            description += f"\n {self.posterUrl}"
+        if self.imdb:
+            description += f"\n{self.imdb}"
         event.add("description", description)
 
-        event.add("uid", f"{self.imdb or self.episode_title}-{self.airdate_utc.isoformat()}")
+        event.add("uid", f"{self.episode_title or self.imdb}-{self.season_num}-{self.episode_num}")
         return event
 
 
@@ -243,6 +239,8 @@ async def radarr_calendar(
     httpx_client: Annotated[httpx.AsyncClient, Depends(get_httpx_client)],
 ) -> Response:
     radarr_events = await fetch_radarr_events(httpx_client)
+    radarr_events.sort(key=lambda ev: ev.get("dtstart").dt)
+
     cal = Calendar()
     for event in radarr_events:
         cal.add_component(event)
@@ -254,6 +252,8 @@ async def sonarr_calendar(
     httpx_client: Annotated[httpx.AsyncClient, Depends(get_httpx_client)],
 ) -> Response:
     sonarr_events = await fetch_sonarr_events(httpx_client)
+    sonarr_events.sort(key=lambda ev: ev.get("dtstart").dt)
+
     cal = Calendar()
     for event in sonarr_events:
         cal.add_component(event)
