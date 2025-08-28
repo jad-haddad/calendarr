@@ -8,7 +8,7 @@ import httpx
 from fastapi import Depends, FastAPI, Response
 from fastapi.requests import Request
 from fastapi.responses import PlainTextResponse
-from icalendar import Calendar, Event
+from icalendar import Calendar, Event, vDate
 from pydantic import BaseModel
 
 unset_variables = []
@@ -89,8 +89,8 @@ class MovieRelease(BaseModel):
         if self.runtime:
             title += f" ({self.runtime})"
         event.add("summary", title)
-        event.add("dtstart", self.releaseDate)
-        event.add("dtend", self.releaseDate + timedelta(days=1))
+        event.add("dtstart", vDate(self.releaseDate))
+        event.add("dtend", vDate(self.releaseDate + timedelta(days=1)))
         if self.imdb:
             event.add("url", self.imdb)
 
@@ -123,8 +123,8 @@ class SeriesRelease(BaseModel):
         if self.runtime:
             title += f" ({self.runtime})"
         event.add("summary", title)
-        event.add("dtstart", self.airdate_utc)
-        event.add("dtend", self.airdate_utc + timedelta(days=1))
+        event.add("dtstart", vDate(self.airdate_utc))
+        event.add("dtend", vDate(self.airdate_utc + timedelta(days=1)))
         if self.imdb:
             event.add("url", self.imdb)
 
