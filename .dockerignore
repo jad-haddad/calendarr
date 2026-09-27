@@ -1,7 +1,4 @@
-__pycache__/
-*.py[cod]
-.venv/
-.env
+target/
 .git/
-dist/
-build/
+.env
+*.md
